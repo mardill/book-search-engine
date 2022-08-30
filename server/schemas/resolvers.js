@@ -2,17 +2,11 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User, Book } = require('../models');
 const { signToken } = require('../utils/auth');
 
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
+
+
 
 const resolvers = {
   Query: {
-    users: async () => {
-      return users.find();
-    },
-    user: async (parent, { _id }) => {
-      return User.find({ _id: _id });
-    },
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
@@ -45,7 +39,7 @@ const resolvers = {
       return { token, user };
     },
 
-      deleteBook: async (parent, { _id }) => {
+      removeBook: async (parent, { _id }) => {
           const book = await Book.findOneAndDelete(
               { _id },
               { new: true }
