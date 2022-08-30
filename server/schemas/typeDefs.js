@@ -19,16 +19,21 @@ const typeDefs = gql`
     title: String
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type Query {
     user(_id: String): [User]
+    me: User
   }
 
   type Mutation {
-    createMatchup(tech1: String!, tech2: String!): Matchup
-    createVote(_id: String!, techNum: Int!): Matchup
 
-    createUser(username: String!, email: String!, password: String!): User
     deleteBook(_id: String): Book
+    addUser(name: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
   }
 `;
 
