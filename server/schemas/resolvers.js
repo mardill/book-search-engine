@@ -47,6 +47,14 @@ const resolvers = {
           return book;
       },
 
+      savedBook: async (parent, { _id }) => {
+        const savedBook = await savedBook.findOneAndUpdate(
+            { _id },
+            { new: true }
+        );
+        return savedBook;
+    },
+
 
   }
 };

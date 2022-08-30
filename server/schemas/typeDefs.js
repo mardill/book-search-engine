@@ -20,6 +20,15 @@ const typeDefs = gql`
     link: String
   }
 
+  type savedBook {
+    bookId: String!
+    authors: String
+    description: String!
+    title: String
+    image: String
+    link: String
+  }
+
   type Auth {
     token: ID!
     user: User
