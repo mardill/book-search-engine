@@ -7,14 +7,23 @@ const { Kind } = require('graphql/language');
 
 const resolvers = {
   Query: {
+    users: async () => {
+      return users.find();
+    },
     user: async (parent, { _id }) => {
       return User.find({ _id: _id });
     },
-     
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
+     
   Mutation: {
-    addUser: async (parent, { name, email, password }) => {
-      const user = await User.create({ name, email, password });
+    createUser: async (parent, { name, email, password }) => {
+      const user = await User.create({ username, email, password });
       const token = signToken(user);
 
       return { token, user };
@@ -48,4 +57,4 @@ const resolvers = {
   }
 };
 
-module.exports = {resolvers, resolverMap};
+module.exports = resolvers ;
